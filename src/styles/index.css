@@ -51,7 +51,8 @@ a {
   }
 
   .hero-copy h1 {
-    @apply max-w-4xl text-4xl font-semibold leading-tight text-slate-950 sm:text-5xl;
+    font-family: 'Bricolage Grotesque', 'Plus Jakarta Sans', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+    @apply max-w-4xl text-5xl font-extrabold leading-none tracking-[-0.04em] text-slate-950 sm:text-6xl;
   }
 
   .hero-copy p {
