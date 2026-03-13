@@ -6,14 +6,14 @@ Most contributions should update venue metadata rather than app logic.
 
 Primary source-of-truth file:
 
-- [`src/data/venues.json`](/home/zdj/.openclaw/workspace/roboddl/src/data/venues.json)
+- [`src/data/venues.json`](./src/data/venues.json)
 
 ## Project structure
 
-- Data file: [`src/data/venues.json`](/home/zdj/.openclaw/workspace/roboddl/src/data/venues.json)
-- Venue normalization logic: [`src/data/conferences.ts`](/home/zdj/.openclaw/workspace/roboddl/src/data/conferences.ts)
-- Time conversion helpers: [`src/utils/dateUtils.ts`](/home/zdj/.openclaw/workspace/roboddl/src/utils/dateUtils.ts)
-- Main page: [`src/App.tsx`](/home/zdj/.openclaw/workspace/roboddl/src/App.tsx)
+- Data file: [`src/data/venues.json`](./src/data/venues.json)
+- Venue normalization logic: [`src/data/conferences.ts`](./src/data/conferences.ts)
+- Time conversion helpers: [`src/utils/dateUtils.ts`](./src/utils/dateUtils.ts)
+- Main page: [`src/App.tsx`](./src/App.tsx)
 
 ## Local development
 
