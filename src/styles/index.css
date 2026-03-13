@@ -72,7 +72,7 @@ a {
   }
 
   .live-label {
-    @apply text-xs font-medium text-slate-500;
+    @apply text-sm font-medium text-slate-500 sm:text-base;
   }
 
   .live-time {
@@ -81,11 +81,11 @@ a {
   }
 
   .live-date {
-    @apply mt-1 text-sm text-slate-500;
+    @apply mt-2 text-base text-slate-500 sm:text-lg;
   }
 
   .stats-grid {
-    @apply grid gap-3 sm:grid-cols-2 lg:grid-cols-4;
+    @apply grid grid-cols-2 gap-3 max-[420px]:grid-cols-1 lg:grid-cols-4;
   }
 
   .stat-card {
