@@ -14,6 +14,14 @@ function ConferenceCard({ venue, isFavorite, onToggleFavorite }: ConferenceCardP
   const title = venue.year ? `${venue.title} ${venue.year}` : venue.title;
   const [isExpanded, setIsExpanded] = useState(false);
   const deadlineLabel = venue.submissionModel === 'deadline' ? venue.countdownLabel : 'Status';
+  const hasCcfRank = Boolean(venue.ccfRank && venue.ccfRank !== 'N/A');
+  const hasCaaiRank = Boolean(venue.caaiRank && venue.caaiRank !== 'N/A');
+  const journalMetricItems = [
+    hasCcfRank ? `CCF: ${venue.ccfRank}` : null,
+    hasCaaiRank ? `CAAI: ${venue.caaiRank}` : null,
+    venue.casPartition && venue.casPartition !== 'N/A' ? `CAS: ${venue.casPartition}` : null,
+    venue.jcrQuartile && venue.jcrQuartile !== 'N/A' ? `JCR: ${venue.jcrQuartile}` : null,
+  ].filter((item): item is string => Boolean(item));
 
   return (
     <article className="venue-card">
@@ -25,9 +33,9 @@ function ConferenceCard({ venue, isFavorite, onToggleFavorite }: ConferenceCardP
             <div className="badge-row">
               {venue.venueType !== 'conference' ? <span className="pill pill-strong">{venue.venueType}</span> : null}
               <span className="pill">{venue.category}</span>
-              {venue.ccfRank ? <span className="pill">CCF {venue.ccfRank}</span> : <span className="pill">{venue.rank}</span>}
+              {hasCcfRank ? <span className="pill">CCF {venue.ccfRank}</span> : null}
               {venue.coreRank ? <span className="pill">CORE {venue.coreRank}</span> : null}
-              {venue.caaiRank ? <span className="pill">CAAI {venue.caaiRank}</span> : null}
+              {hasCaaiRank ? <span className="pill">CAAI {venue.caaiRank}</span> : null}
             </div>
           </div>
           {!isExpanded && venue.submissionModel === 'deadline' ? (
@@ -108,18 +116,19 @@ function ConferenceCard({ venue, isFavorite, onToggleFavorite }: ConferenceCardP
                     <div className="meta-value">Rolling submission</div>
                     <div className="meta-sub">{venue.note}</div>
                   </div>
-                  <div className="meta-block">
-                    <div className="meta-label">
-                      <Globe2 className="h-4 w-4" />
-                      Journal metrics
+                  {journalMetricItems.length > 0 ? (
+                    <div className="meta-block">
+                      <div className="meta-label">
+                        <Globe2 className="h-4 w-4" />
+                        Journal metrics
+                      </div>
+                      <div className="journal-metrics">
+                        {journalMetricItems.map((item) => (
+                          <span key={item}>{item}</span>
+                        ))}
+                      </div>
                     </div>
-                    <div className="journal-metrics">
-                      {venue.ccfRank && venue.ccfRank !== 'N/A' ? <span>CCF: {venue.ccfRank}</span> : null}
-                      {venue.caaiRank && venue.caaiRank !== 'N/A' ? <span>CAAI: {venue.caaiRank}</span> : null}
-                      {venue.casPartition && venue.casPartition !== 'N/A' ? <span>CAS: {venue.casPartition}</span> : null}
-                      {venue.jcrQuartile && venue.jcrQuartile !== 'N/A' ? <span>JCR: {venue.jcrQuartile}</span> : null}
-                    </div>
-                  </div>
+                  ) : null}
                 </>
               )}
             </div>
