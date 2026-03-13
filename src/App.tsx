@@ -192,6 +192,7 @@ function App() {
         <section className="hero-card">
           <div className="hero-copy">
             <h1>RoboDDL</h1>
+            <div className="hero-note">WIP. Deadlines and ratings may still contain errors.</div>
             <p>AoE deadlines for robotics conferences and journals.</p>
             <a
               href="https://github.com/RoboDDL/RoboDDL"
