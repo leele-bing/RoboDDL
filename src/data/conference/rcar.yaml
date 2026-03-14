@@ -4,6 +4,7 @@ fullTitle: "IEEE International Conference on Real-time Computing and Robotics"
 summary: "Conference on robotics and real-time computing covering robot control, perception, sensor fusion, human-robot interaction, robot intelligence, and real-world robotic systems."
 venueType: "conference"
 category: "RAS"
+caaRank: "B"
 ccfRank: "N/A"
 homepage: "https://rcar2026.org/"
 keywords:

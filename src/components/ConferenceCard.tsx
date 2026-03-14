@@ -20,9 +20,9 @@ function ConferenceCard({ venue, isFavorite, onToggleFavorite }: ConferenceCardP
   const hasCcfRank = Boolean(venue.ccfRank && venue.ccfRank !== 'N/A');
   const hasCaaiRank = Boolean(venue.caaiRank && venue.caaiRank !== 'N/A');
   const journalMetricItems = [
-    hasCaaRank ? `CAA: ${venue.caaRank}` : null,
     hasCcfRank ? `CCF: ${venue.ccfRank}` : null,
     hasCaaiRank ? `CAAI: ${venue.caaiRank}` : null,
+    hasCaaRank ? `CAA: ${venue.caaRank}` : null,
     venue.casPartition && venue.casPartition !== 'N/A' ? `CAS: ${venue.casPartition}` : null,
     venue.jcrQuartile && venue.jcrQuartile !== 'N/A' ? `JCR: ${venue.jcrQuartile}` : null,
   ].filter((item): item is string => Boolean(item));
@@ -42,9 +42,9 @@ function ConferenceCard({ venue, isFavorite, onToggleFavorite }: ConferenceCardP
                 </span>
               ))}
               {venue.venueType === 'conference' ? <span className="pill">{venue.category}</span> : null}
-              {hasCaaRank ? <span className="pill">CAA {venue.caaRank}</span> : null}
               {hasCcfRank ? <span className="pill">CCF {venue.ccfRank}</span> : null}
               {hasCaaiRank ? <span className="pill">CAAI {venue.caaiRank}</span> : null}
+              {hasCaaRank ? <span className="pill">CAA {venue.caaRank}</span> : null}
             </div>
           </div>
           {!isExpanded && venue.submissionModel === 'deadline' ? (

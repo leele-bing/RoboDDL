@@ -395,6 +395,17 @@ function App() {
         </section>
       </main>
 
+      <footer className="page-footer">
+        <div className="page-footer-divider" aria-hidden="true" />
+        <p>
+          Maintained by{' '}
+          <a href="https://github.com/RoboDDL/RoboDDL" target="_blank" rel="noreferrer">
+            RoboDDL
+          </a>
+          . Contributions welcome.
+        </p>
+      </footer>
+
       {showBackToTop ? (
         <button
           type="button"
