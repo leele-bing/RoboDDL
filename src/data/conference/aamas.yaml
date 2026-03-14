@@ -5,7 +5,7 @@ summary: "Key multi-agent venue for planning, decision making, coordination, emb
 venueType: "conference"
 category: "AI x Robotics"
 rank: "A"
-coreRank: "A"
+ccfRank: "B"
 caaiRank: "B"
 homepage: "https://www.aamas-conference.org/"
 dblp: "conf/aamas"

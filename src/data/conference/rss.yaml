@@ -5,7 +5,7 @@ summary: "Top robotics venue focused on core robotics science, systems, planning
 venueType: "conference"
 category: "RAS"
 rank: "RAS A"
-coreRank: "A*"
+ccfRank: "N/A"
 caaiRank: "A"
 homepage: "https://roboticsconference.org/"
 dblp: "conf/rss"

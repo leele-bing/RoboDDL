@@ -5,6 +5,7 @@ summary: "Conference on robotics and real-time computing covering robot control,
 venueType: "conference"
 category: "RAS"
 rank: "A"
+ccfRank: "N/A"
 homepage: "https://rcar2026.org/"
 keywords:
   - "rcar"

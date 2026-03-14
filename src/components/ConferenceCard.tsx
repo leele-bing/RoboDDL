@@ -35,7 +35,6 @@ function ConferenceCard({ venue, isFavorite, onToggleFavorite }: ConferenceCardP
               {venue.venueType !== 'conference' ? <span className="pill pill-strong">{venue.venueType}</span> : null}
               <span className="pill">{venue.category}</span>
               {hasCcfRank ? <span className="pill">CCF {venue.ccfRank}</span> : null}
-              {venue.coreRank ? <span className="pill">CORE {venue.coreRank}</span> : null}
               {hasCaaiRank ? <span className="pill">CAAI {venue.caaiRank}</span> : null}
             </div>
           </div>

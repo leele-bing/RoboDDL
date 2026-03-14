@@ -5,7 +5,7 @@ summary: "Broad AI conference where robotics planning, embodied agents, decision
 venueType: "conference"
 category: "AI x Robotics"
 rank: "A"
-coreRank: "A*"
+ccfRank: "A"
 caaiRank: "A"
 homepage: "https://aaai.org/conference/aaai/"
 dblp: "conf/aaai"

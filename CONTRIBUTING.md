@@ -96,7 +96,7 @@ summary: "One-sentence summary of the venue scope and why it belongs in RoboDDL.
 venueType: "conference"
 category: "RAS"
 rank: "A"
-coreRank: "A*"
+ccfRank: "B"
 caaiRank: "A"
 homepage: "https://series-homepage.example.com/"
 dblp: "conf/example"
@@ -128,7 +128,7 @@ futureHints:
 Conference template notes:
 
 - Required top-level fields are `slug`, `title`, `fullTitle`, `summary`, `venueType`, `category`, `rank`, `homepage`, `submissionModel`, and `knownEditions`.
-- `cycleYears`, `coreRank`, `caaiRank`, `dblp`, `keywords`, `abstractDeadline`, `note`, and `futureHints` are optional.
+- `cycleYears`, `ccfRank`, `caaiRank`, `dblp`, `keywords`, `abstractDeadline`, `note`, and `futureHints` are optional.
 - `knownEditions` should contain official historical or current editions, not guesses. Keep the newest official edition even after its deadline passes, because future estimation depends on it.
 - Omit `cycleYears` for normal annual venues. Set `cycleYears: 2` only when the series is intentionally not annual.
 - Use the official CFP or official venue page for `deadlineSourceUrl`. Avoid blog posts, reminder sites, or reposted deadline aggregators.

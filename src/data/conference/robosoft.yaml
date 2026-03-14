@@ -5,6 +5,7 @@ summary: "Flagship soft robotics conference covering soft actuation, soft sensin
 venueType: "conference"
 category: "RAS"
 rank: "A"
+ccfRank: "N/A"
 homepage: "https://www.robosoft2026.org/"
 dblp: "conf/robosoft"
 keywords:

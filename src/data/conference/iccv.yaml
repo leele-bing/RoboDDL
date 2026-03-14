@@ -5,7 +5,7 @@ summary: "Premier computer vision conference with strong robotics relevance in p
 venueType: "conference"
 category: "AI x Robotics"
 rank: "A*"
-coreRank: "A*"
+ccfRank: "A"
 homepage: "https://iccv.thecvf.com/"
 dblp: "conf/iccv"
 keywords:

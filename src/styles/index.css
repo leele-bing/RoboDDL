@@ -63,8 +63,35 @@ a {
     @apply inline-flex w-fit rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700;
   }
 
+  .hero-actions {
+    @apply flex flex-wrap items-center gap-2;
+  }
+
   .hero-link {
     @apply inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition hover:border-slate-300 hover:text-slate-900;
+  }
+
+  .hero-star-badge {
+    @apply inline-flex items-stretch rounded-md shadow-sm;
+  }
+
+  .hero-star-button,
+  .hero-star-count {
+    @apply inline-flex h-9 items-center border border-slate-300 bg-white text-sm text-slate-700 transition;
+  }
+
+  .hero-star-button {
+    @apply gap-2 rounded-l-md px-3 font-medium hover:bg-slate-50 hover:text-slate-900;
+  }
+
+  .hero-star-count {
+    font-family: 'JetBrains Mono', 'SFMono-Regular', monospace;
+    @apply -ml-px min-w-[3.25rem] justify-center rounded-r-md px-3 font-semibold hover:bg-slate-50 hover:text-slate-900;
+  }
+
+  .hero-star-button span,
+  .hero-star-count span {
+    @apply leading-none;
   }
 
   .hero-panel {

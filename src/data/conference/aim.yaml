@@ -5,6 +5,7 @@ summary: "Flagship mechatronics conference spanning robotics, intelligent system
 venueType: "conference"
 category: "RAS"
 rank: "A"
+ccfRank: "N/A"
 homepage: "https://www.ieee-asme-mechatronics.info/aim-conferences/"
 dblp: "conf/aim"
 keywords:

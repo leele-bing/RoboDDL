@@ -13,7 +13,7 @@ function SearchBar({ value, onChange }: SearchBarProps) {
         type="text"
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="Search venue names, keywords, or locations"
+        placeholder="Search by names, keywords, or locations"
       />
     </label>
   );

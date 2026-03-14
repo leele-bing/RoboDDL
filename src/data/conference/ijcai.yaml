@@ -5,7 +5,7 @@ summary: "Long-running flagship AI conference with steady robotics presence in p
 venueType: "conference"
 category: "AI x Robotics"
 rank: "A*"
-coreRank: "A*"
+ccfRank: "B"
 homepage: "https://ijcai.org/"
 dblp: "conf/ijcai"
 keywords:

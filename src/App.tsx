@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowUp, Github } from 'lucide-react';
+import { ArrowUp, Github, Star } from 'lucide-react';
 import ConferenceCard from './components/ConferenceCard';
 import FilterPanel from './components/FilterPanel';
 import SearchBar from './components/SearchBar';
@@ -7,6 +7,7 @@ import SubmissionCalendar from './components/SubmissionCalendar';
 import { buildVenueViews, Category, RatingFilter, VenueType } from './data/conferences';
 
 function App() {
+  const [githubStars, setGithubStars] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedVenueType, setSelectedVenueType] = useState<'All' | VenueType>('All');
   const [selectedCategory, setSelectedCategory] = useState<'All' | Category>('All');
@@ -34,6 +35,36 @@ function App() {
     }, 1000);
 
     return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    async function loadGithubStars() {
+      try {
+        const response = await fetch('https://api.github.com/repos/RoboDDL/RoboDDL', {
+          signal: abortController.signal,
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        const payload = (await response.json()) as { stargazers_count?: number };
+
+        if (typeof payload.stargazers_count === 'number') {
+          setGithubStars(payload.stargazers_count);
+        }
+      } catch (error) {
+        if ((error as Error).name !== 'AbortError') {
+          console.error('Failed to load GitHub stars.', error);
+        }
+      }
+    }
+
+    void loadGithubStars();
+
+    return () => abortController.abort();
   }, []);
 
   useEffect(() => {
@@ -140,6 +171,14 @@ function App() {
     };
   }, [favoriteVenueIds.length, venues]);
 
+  const githubStarsLabel =
+    githubStars === null
+      ? null
+      : new Intl.NumberFormat('en-US', {
+          notation: githubStars >= 1000 ? 'compact' : 'standard',
+          maximumFractionDigits: 1,
+        }).format(githubStars);
+
   const toggleFavorite = (venueId: string) => {
     setFavoriteVenueIds((current) => {
       return current.includes(venueId)
@@ -192,15 +231,40 @@ function App() {
             <h1>RoboDDL</h1>
             <div className="hero-note">[WIP] Deadlines and ratings may still contain errors!</div>
             <p>Deadlines for robotics conferences and journals</p>
-            <a
-              href="https://github.com/RoboDDL/RoboDDL"
-              target="_blank"
-              rel="noreferrer"
-              className="hero-link"
-              aria-label="RoboDDL on GitHub"
-            >
-              <Github className="h-4 w-4" />
-            </a>
+            <div className="hero-actions">
+              <a
+                href="https://github.com/RoboDDL/RoboDDL"
+                target="_blank"
+                rel="noreferrer"
+                className="hero-link"
+                aria-label="RoboDDL on GitHub"
+              >
+                <Github className="h-4 w-4" />
+              </a>
+              {githubStarsLabel ? (
+                <div className="hero-star-badge" aria-label={`RoboDDL GitHub stars: ${githubStars}`}>
+                  <a
+                    href="https://github.com/RoboDDL/RoboDDL"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hero-star-button"
+                    aria-label="Star RoboDDL on GitHub"
+                  >
+                    <Star className="h-4 w-4" />
+                    <span>Star</span>
+                  </a>
+                  <a
+                    href="https://github.com/RoboDDL/RoboDDL/stargazers"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hero-star-count"
+                    aria-label={`View ${githubStars} RoboDDL GitHub stars`}
+                  >
+                    <span>{githubStarsLabel}</span>
+                  </a>
+                </div>
+              ) : null}
+            </div>
           </div>
 
           <div className="hero-panel">

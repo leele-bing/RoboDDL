@@ -5,6 +5,7 @@ summary: "Leading biomedical robotics conference spanning surgical robotics, reh
 venueType: "conference"
 category: "RAS"
 rank: "A"
+ccfRank: "N/A"
 homepage: "https://2026.ieeebiorob.org/"
 dblp: "conf/biorob"
 keywords:

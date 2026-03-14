@@ -5,7 +5,7 @@ summary: "Top computer vision conference with strong robotics relevance in perce
 venueType: "conference"
 category: "AI x Robotics"
 rank: "A*"
-coreRank: "A*"
+ccfRank: "A"
 homepage: "https://cvpr.thecvf.com/"
 dblp: "conf/cvpr"
 keywords:

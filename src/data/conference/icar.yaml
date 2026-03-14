@@ -5,6 +5,7 @@ summary: "Long-running robotics conference covering advanced robotic systems, ma
 venueType: "conference"
 category: "RAS"
 rank: "A"
+ccfRank: "N/A"
 homepage: "https://icar2025.inaut.unsj.edu.ar/"
 dblp: "conf/icar"
 keywords:

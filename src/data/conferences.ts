@@ -18,7 +18,6 @@ interface VenueRecordBase {
   venueType: VenueType;
   category: Category;
   rank: string;
-  coreRank?: string;
   caaiRank?: string;
   ccfRank?: string;
   casPartition?: string;
@@ -76,7 +75,6 @@ export interface VenueView {
   venueType: VenueType;
   category: Category;
   rank: string;
-  coreRank?: string;
   caaiRank?: string;
   ccfRank?: string;
   casPartition?: string;
@@ -151,7 +149,6 @@ function resolveDeadlineVenue(record: DeadlineVenueRecord, now: Date): VenueView
       venueType: record.venueType,
       category: record.category,
       rank: record.rank,
-      coreRank: record.coreRank,
       caaiRank: record.caaiRank,
       ccfRank: record.ccfRank,
       casPartition: record.casPartition,
@@ -224,7 +221,6 @@ function resolveDeadlineVenue(record: DeadlineVenueRecord, now: Date): VenueView
     venueType: record.venueType,
     category: record.category,
     rank: record.rank,
-    coreRank: record.coreRank,
     caaiRank: record.caaiRank,
     ccfRank: record.ccfRank,
     casPartition: record.casPartition,
@@ -261,7 +257,6 @@ function resolveRollingVenue(record: RollingVenueRecord): VenueView {
     venueType: record.venueType,
     category: record.category,
     rank: record.rank,
-    coreRank: record.coreRank,
     caaiRank: record.caaiRank,
     ccfRank: record.ccfRank,
     casPartition: record.casPartition,

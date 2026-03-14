@@ -5,6 +5,7 @@ summary: "Major venue for human-robot interaction, social robotics, assistive ro
 venueType: "conference"
 category: "RAS"
 rank: "A"
+ccfRank: "N/A"
 homepage: "https://ro-man2026.org/"
 dblp: "conf/roman"
 keywords:

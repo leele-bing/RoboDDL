@@ -5,6 +5,7 @@ summary: "Field robotics journal focused on robots deployed in outdoor, agricult
 venueType: "journal"
 category: "Journal"
 rank: "Top Journal"
+ccfRank: "N/A"
 homepage: "https://www.ieee-ras.org/publications/t-fro"
 keywords:
   - "tfr"
