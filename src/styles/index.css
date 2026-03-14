@@ -383,11 +383,11 @@ a {
   }
 
   .results-list {
-    @apply flex flex-col gap-4;
+    @apply flex flex-col gap-1.5;
   }
 
   .venue-card {
-    @apply flex flex-col gap-3 p-4;
+    @apply flex flex-col gap-3 p-3;
   }
 
   .venue-summary-row {
@@ -946,7 +946,7 @@ a {
   }
 
   .venue-card {
-    padding: 1rem;
+    padding: 0.75rem;
   }
 
   .meta-value {
