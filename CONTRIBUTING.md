@@ -1,90 +1,111 @@
 # Contributing to RoboDDL
 
-## Scope
+Most contributions to RoboDDL fall into four categories:
 
-Most contributions should update venue metadata rather than app logic.
+- Data additions and updates
+- Bug fixes
+- Feature requests
+- Others
 
-Primary source-of-truth directories:
+Most actual PRs are still data updates.
 
-- [`src/data/conference`](./src/data/conference)
-- [`src/data/journal`](./src/data/journal)
+## Contribution types
 
-## Project structure
+### Data additions and updates
 
-- Conference data: [`src/data/conference`](./src/data/conference)
-- Journal data: [`src/data/journal`](./src/data/journal)
-- Venue file loader: [`src/data/loadVenueRecords.ts`](./src/data/loadVenueRecords.ts)
-- Venue normalization logic: [`src/data/conferences.ts`](./src/data/conferences.ts)
-- Time conversion helpers: [`src/utils/dateUtils.ts`](./src/utils/dateUtils.ts)
-- Main page: [`src/App.tsx`](./src/App.tsx)
+- Add or update venue metadata in [`src/data/conference`](./src/data/conference) or [`src/data/journal`](./src/data/journal).
+- Verify every changed field against an official source.
+- If you only need to fix a deadline, source link, rank, or venue metadata, you will usually edit a single YAML file.
 
-## Local development
+### Bug fixes
 
-Install dependencies and start the dev server:
+- Use this for broken UI, wrong countdown behavior, parsing issues, layout regressions, or incorrect filtering behavior.
+- Include clear reproduction steps, expected behavior, and screenshots if the bug is visual.
+
+### Feature requests
+
+- Use this for new pages, filters, sorting behavior, data fields, workflow improvements, or larger UX changes.
+- Explain the use case and why the feature would help RoboDDL users.
+
+### Others
+
+- Use this for documentation cleanup, refactors, discussion topics, housekeeping, and anything that does not fit the three categories above.
+
+## Quick workflow
+
+1. Identify which contribution type your change belongs to.
+2. Update the relevant files.
+3. Verify sources or behavior.
+4. Run:
 
 ```bash
 npm install
-npm run dev
-```
-
-Create a production build:
-
-```bash
 npm run build
 ```
 
-Preview the production build locally:
+5. If you changed the UI, also check desktop and a narrow mobile viewport.
+6. Open a PR or issue with enough context for review.
+
+Useful commands:
 
 ```bash
+npm run dev
 npm run preview
 ```
 
-## Before you open a PR
+## What to edit
 
-- Keep the change focused
-- Prefer data-only edits when possible
-- Verify every deadline, rating, or venue link with a source
-- Run `npm run build`
-- If UI changed, check desktop and a narrow mobile viewport
+- Conference data: [`src/data/conference`](./src/data/conference)
+- Journal data: [`src/data/journal`](./src/data/journal)
+- Venue loader: [`src/data/loadVenueRecords.ts`](./src/data/loadVenueRecords.ts)
+- Conference normalization: [`src/data/conferences.ts`](./src/data/conferences.ts)
+- Timezone helpers: [`src/utils/dateUtils.ts`](./src/utils/dateUtils.ts)
+- Main UI: [`src/App.tsx`](./src/App.tsx)
 
-## Data update rules
+## Data rules
 
-For conferences:
+### Conferences
 
-- Use `submissionModel: "deadline"`
-- Add or update `knownEditions`
-- Include `paperDeadline`, `timezone`, `conferenceDates`, `location`, and source links
-- If the next edition is not announced, keep the latest official edition and let the site estimate the next cycle
+- Use `submissionModel: "deadline"`.
+- Keep `knownEditions` up to date.
+- Include `paperDeadline`, `timezone`, `conferenceDates`, `location`, and source links for official editions.
+- If the next edition is not announced yet, keep the latest official edition and let the site estimate the next cycle.
+- `abstractDeadline` is optional.
+- Use `cycleYears: 2` only for non-annual venues such as `ECCV`.
+- `futureHints` is optional and only meant for future date/location/link context when the next deadline is still estimated.
 
-For journals:
+### Journals
 
-- Use `submissionModel: "rolling"`
-- Fill `ccfRank`, `caaiRank`, `casPartition`, and `jcrQuartile` when known
-- Use `"N/A"` when the metric is not publicly available or the venue is not listed
+- Use `submissionModel: "rolling"`.
+- Fill `ccfRank`, `caaiRank`, `casPartition`, and `jcrQuartile` when known.
+- Use `"N/A"` when a metric is unavailable or the venue is not listed.
+- `sourceUrl` should support the rolling-submission claim with an official journal or publisher page.
+- `specialIssueLabel` and `specialIssueUrl` are optional, but should be added together when relevant.
 
-## YAML format rules
+## YAML rules
 
-This repo uses a small custom parser in [`src/data/loadVenueRecords.ts`](./src/data/loadVenueRecords.ts), so the venue files must stay very simple:
+Venue files are parsed by a small custom loader in [`src/data/loadVenueRecords.ts`](./src/data/loadVenueRecords.ts), so keep them intentionally simple:
 
 - Quote all string values with double quotes. Example: `title: "ICRA"`.
-- Keep numeric values unquoted when they are really numbers. Example: `year: 2027`.
-- Use spaces for indentation, not tabs.
-- Do not add YAML comments inside venue files. Lines starting with `#` are not supported by the parser.
-- Do not use YAML features such as anchors, inline objects, or complex multiline syntax.
+- Keep real numbers unquoted. Example: `year: 2027`.
+- Use spaces, not tabs.
+- Do not add YAML comments beginning with `#`.
+- Do not use advanced YAML features such as anchors, inline objects, or complex multiline syntax.
 - Keep `venueType: "conference"` files in `src/data/conference` and `venueType: "journal"` files in `src/data/journal`.
 
-There are a few logic rules worth knowing before editing:
+Behavior details worth knowing:
 
-- For conference venues, the newest official item in `knownEditions` is the fallback reference used to estimate future deadlines when the next CFP is not published yet.
-- Conference venues are assumed to be annual unless you set `cycleYears`. Use `cycleYears: 2` for biennial venues such as `ECCV`.
-- `futureHints` is optional and is only used to fill in future conference date, location, and landing page when the next deadline is still estimated.
-- `abstractDeadline` is optional. If it exists and is still in the future, the countdown will target the abstract deadline first.
+- For conferences, the newest official item in `knownEditions` is the fallback reference for future estimation.
+- The app assumes conferences are annual unless `cycleYears` says otherwise.
+- If `abstractDeadline` exists and is still in the future, the countdown targets it before `paperDeadline`.
 - Supported timezones come from [`src/utils/dateUtils.ts`](./src/utils/dateUtils.ts): `AoE`, `PST`, `PDT`, `EST`, `EDT`, `UTC`, `GMT`, and `UTC±HH[:MM]`.
-## Venue YAML templates
 
-These templates are intentionally copy-paste safe. If an optional field does not apply, delete the whole line or block rather than leaving a fake placeholder in the final file.
+## Templates
 
-Conference template:
+Delete optional lines that do not apply instead of leaving placeholder content behind.
+
+<details>
+<summary>Conference template</summary>
 
 ```yaml
 slug: "venue-slug"
@@ -100,7 +121,6 @@ dblp: "conf/example"
 keywords:
   - "keyword 1"
   - "keyword 2"
-  - "keyword 3"
 submissionModel: "deadline"
 cycleYears: 1
 knownEditions:
@@ -113,7 +133,7 @@ knownEditions:
     link: "https://2027.venue.example.com/"
     deadlineSourceLabel: "VENUE 2027 Call for Papers"
     deadlineSourceUrl: "https://2027.venue.example.com/call-for-papers/"
-    note: "Optional extra context shown on the card, for example a timezone assumption."
+    note: "Optional extra context shown on the card."
 futureHints:
   - year: 2028
     conferenceDates: "May 18-22, 2028"
@@ -122,17 +142,18 @@ futureHints:
     note: "Optional future-meeting note."
 ```
 
-Conference template notes:
+Conference notes:
 
-- Required top-level fields are `slug`, `title`, `fullTitle`, `summary`, `venueType`, `category`, `homepage`, `submissionModel`, and `knownEditions`.
+- Required top-level fields: `slug`, `title`, `fullTitle`, `summary`, `venueType`, `category`, `homepage`, `submissionModel`, `knownEditions`.
 - `cycleYears`, `ccfRank`, `caaiRank`, `dblp`, `keywords`, `abstractDeadline`, `note`, and `futureHints` are optional.
-- `knownEditions` should contain official historical or current editions, not guesses. Keep the newest official edition even after its deadline passes, because future estimation depends on it.
-- Omit `cycleYears` for normal annual venues. Set `cycleYears: 2` only when the series is intentionally not annual.
-- Use the official CFP or official venue page for `deadlineSourceUrl`. Avoid blog posts, reminder sites, or reposted deadline aggregators.
-- Use the real local deadline plus the correct `timezone`. The app will convert it to AoE for display.
-- Today the app only exposes `RAS`, `AI x Robotics`, and `Journal` in filters. For conferences, use one of the existing conference categories unless you are also updating the filtering logic.
+- `knownEditions` should contain official editions, not guesses.
+- Prefer official CFP or official event pages for `deadlineSourceUrl`.
+- Use the real local deadline with the correct `timezone`; the app converts it for display.
+- Conference categories should stay aligned with existing filters unless you are also updating the UI logic.
+</details>
 
-Journal template:
+<details>
+<summary>Journal template</summary>
 
 ```yaml
 slug: "journal-slug"
@@ -158,50 +179,41 @@ specialIssueLabel: "Special Issue"
 specialIssueUrl: "https://journal-homepage.example.com/special-issue"
 ```
 
-Journal template notes:
+Journal notes:
 
-- Required top-level fields are `slug`, `title`, `fullTitle`, `summary`, `venueType`, `category`, `homepage`, `submissionModel`, `rollingNote`, `sourceLabel`, and `sourceUrl`.
+- Required top-level fields: `slug`, `title`, `fullTitle`, `summary`, `venueType`, `category`, `homepage`, `submissionModel`, `rollingNote`, `sourceLabel`, `sourceUrl`.
 - `dblp`, `keywords`, `specialIssueLabel`, and `specialIssueUrl` are optional.
-- Prefer keeping `caaiRank`, `ccfRank`, `casPartition`, and `jcrQuartile` present. If a metric is unknown or not listed, set it to `"N/A"` instead of removing it.
-- `sourceUrl` should point to an official journal page or publisher page that supports the rolling-submission claim.
-- If a journal currently has a live special issue or special collection page that contributors should know about, add both `specialIssueLabel` and `specialIssueUrl`. If not, omit both lines.
+- Prefer keeping `caaiRank`, `ccfRank`, `casPartition`, and `jcrQuartile` present, using `"N/A"` when needed.
+</details>
 
-## Issue guide
+## Issues and PRs
 
-Open an issue when:
+Open an issue for:
 
-- A deadline is wrong or missing
-- A venue should be added or removed
-- A rating source changed
-- The UI breaks on desktop or mobile
-- A source link is dead or outdated
+- Data additions and updates that need confirmation before implementation
+- Bug reports
+- Feature requests
+- Others such as docs, cleanup, or discussion topics
 
 Include:
 
-- Venue name
-- Wrong field
-- Source URL
-- Date checked
+- A short description of the change or problem
+- Relevant venue name or affected page
+- Source URL if the issue is about data
+- Reproduction steps if the issue is a bug
 - Screenshot if the issue is visual
 
-Good issue titles:
+In a PR description, include:
 
-- `Update ICRA 2027 paper deadline`
-- `Add official NeurIPS 2026 CFP`
-- `Fix mobile overflow in sticky filter panel`
-
-## PR guide
-
-In your PR description, include:
-
+- Which contribution type it belongs to
 - What changed
 - Why it changed
-- Source links used
-- Whether the change is data-only or UI + data
+- Source links used, if applicable
 
-Suggested checklist:
+Suggested PR checklist:
 
-- [ ] I updated the affected file in `src/data/conference` or `src/data/journal` when changing venue metadata
-- [ ] I added or updated source links
+- [ ] I identified the contribution type
+- [ ] I updated the relevant files
+- [ ] I added or updated source links when needed
 - [ ] I ran `npm run build`
 - [ ] I checked the affected UI if I changed layout or styling
