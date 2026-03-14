@@ -1,25 +1,21 @@
 ## Summary
 
-- What changed?
-- Why is this change needed?
+- A brief description of the change and its purpose
 
 ## Type of change
 
-- [ ] Data update
-- [ ] UI update
-- [ ] Docs update
-- [ ] Build or config update
+- [ ] Data additions and updates
+- [ ] Bug fixes
+- [ ] Feature requests
+- [ ] Others
 
 ## Sources
 
 - Source URL 1:
-- Source URL 2:
 
 ## Checks
 
 - [ ] I kept the change focused
-- [ ] I updated `src/data/venues.json` if venue metadata changed
-- [ ] I added or updated source links
 - [ ] I ran `npm run build`
 - [ ] I checked the affected UI if layout or styling changed
 
