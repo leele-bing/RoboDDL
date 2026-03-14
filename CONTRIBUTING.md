@@ -2,32 +2,88 @@
 
 Most contributions to RoboDDL fall into four categories:
 
-- Data additions and updates
-- Bug fixes
-- Feature requests
-- Others
+- [Data additions and updates](#data-additions-and-updates)
+- [Bug fixes](#bug-fixes)
+- [Feature requests](#feature-requests)
+- [Others](#others)
 
-Most actual PRs are still data updates.
+## Getting started
+
+If you are new to GitHub or local development, this is the easiest way to get RoboDDL running locally.
+
+### 1. Install Git
+
+Install Git so you can clone the repository.
+
+- Download: [https://git-scm.com/downloads](https://git-scm.com/downloads)
+- Check that Git works:
+
+```bash
+git --version
+```
+
+### 2. Install Node.js and npm
+
+RoboDDL uses Node.js for local development. The official Node.js installer already includes `npm`, so you usually do not need to install `npm` separately.
+
+- Download the LTS version: [https://nodejs.org/](https://nodejs.org/)
+- Check that both commands work:
+
+```bash
+node -v
+npm -v
+```
+
+### 3. Clone the repository
+
+If you plan to contribute from your own GitHub account, fork the repository first, then clone your fork. If you already have direct access, you can clone the main repo directly.
+
+```bash
+git clone https://github.com/RoboDDL/RoboDDL.git
+cd RoboDDL
+```
+
+### 4. Install dependencies
+
+```bash
+npm install
+```
+
+### 5. Start the local dev server
+
+```bash
+npm run dev
+```
+
+Vite will print a local URL such as `http://localhost:5173`. Open it in your browser.
+
+### 6. Before opening a PR
+
+Make sure the project still builds successfully:
+
+```bash
+npm run build
+```
 
 ## Contribution types
 
-### Data additions and updates
+### <a id="data-additions-and-updates"></a>Data additions and updates
 
 - Add or update venue metadata in [`src/data/conference`](./src/data/conference) or [`src/data/journal`](./src/data/journal).
 - Verify every changed field against an official source.
 - If you only need to fix a deadline, source link, rank, or venue metadata, you will usually edit a single YAML file.
 
-### Bug fixes
+### <a id="bug-fixes"></a>Bug fixes
 
 - Use this for broken UI, wrong countdown behavior, parsing issues, layout regressions, or incorrect filtering behavior.
 - Include clear reproduction steps, expected behavior, and screenshots if the bug is visual.
 
-### Feature requests
+### <a id="feature-requests"></a>Feature requests
 
 - Use this for new pages, filters, sorting behavior, data fields, workflow improvements, or larger UX changes.
 - Explain the use case and why the feature would help RoboDDL users.
 
-### Others
+### <a id="others"></a>Others
 
 - Use this for documentation cleanup, refactors, discussion topics, housekeeping, and anything that does not fit the three categories above.
 
@@ -46,12 +102,6 @@ npm run build
 5. If you changed the UI, also check desktop and a narrow mobile viewport.
 6. Open a PR or issue with enough context for review.
 
-Useful commands:
-
-```bash
-npm run dev
-npm run preview
-```
 
 ## What to edit
 
@@ -62,7 +112,19 @@ npm run preview
 - Timezone helpers: [`src/utils/dateUtils.ts`](./src/utils/dateUtils.ts)
 - Main UI: [`src/App.tsx`](./src/App.tsx)
 
-## Data rules
+## Venue data guide
+
+Venue files are parsed by a small custom loader in [`src/data/loadVenueRecords.ts`](./src/data/loadVenueRecords.ts), so keep them intentionally simple:
+
+- Quote all string values with double quotes. Example: `title: "ICRA"`.
+- Keep real numbers unquoted. Example: `year: 2027`.
+- Use spaces, not tabs.
+- Do not add YAML comments beginning with `#`.
+- Do not use advanced YAML features such as anchors, inline objects, or complex multiline syntax.
+- Keep `venueType: "conference"` files in `src/data/conference` and `venueType: "journal"` files in `src/data/journal`.
+- Delete optional lines that do not apply instead of leaving placeholder content behind.
+
+Supported timezones come from [`src/utils/dateUtils.ts`](./src/utils/dateUtils.ts): `AoE`, `PST`, `PDT`, `EST`, `EDT`, `UTC`, `GMT`, and `UTC±HH[:MM]`.
 
 ### Conferences
 
@@ -73,36 +135,9 @@ npm run preview
 - `abstractDeadline` is optional.
 - Use `cycleYears: 2` only for non-annual venues such as `ECCV`.
 - `futureHints` is optional and only meant for future date/location/link context when the next deadline is still estimated.
-
-### Journals
-
-- Use `submissionModel: "rolling"`.
-- Fill `ccfRank`, `caaiRank`, `casPartition`, and `jcrQuartile` when known.
-- Use `"N/A"` when a metric is unavailable or the venue is not listed.
-- `sourceUrl` should support the rolling-submission claim with an official journal or publisher page.
-- `specialIssueLabel` and `specialIssueUrl` are optional, but should be added together when relevant.
-
-## YAML rules
-
-Venue files are parsed by a small custom loader in [`src/data/loadVenueRecords.ts`](./src/data/loadVenueRecords.ts), so keep them intentionally simple:
-
-- Quote all string values with double quotes. Example: `title: "ICRA"`.
-- Keep real numbers unquoted. Example: `year: 2027`.
-- Use spaces, not tabs.
-- Do not add YAML comments beginning with `#`.
-- Do not use advanced YAML features such as anchors, inline objects, or complex multiline syntax.
-- Keep `venueType: "conference"` files in `src/data/conference` and `venueType: "journal"` files in `src/data/journal`.
-
-Behavior details worth knowing:
-
-- For conferences, the newest official item in `knownEditions` is the fallback reference for future estimation.
+- The newest official item in `knownEditions` is the fallback reference for future estimation.
 - The app assumes conferences are annual unless `cycleYears` says otherwise.
 - If `abstractDeadline` exists and is still in the future, the countdown targets it before `paperDeadline`.
-- Supported timezones come from [`src/utils/dateUtils.ts`](./src/utils/dateUtils.ts): `AoE`, `PST`, `PDT`, `EST`, `EDT`, `UTC`, `GMT`, and `UTC±HH[:MM]`.
-
-## Templates
-
-Delete optional lines that do not apply instead of leaving placeholder content behind.
 
 <details>
 <summary>Conference template</summary>
@@ -152,6 +187,14 @@ Conference notes:
 - Conference categories should stay aligned with existing filters unless you are also updating the UI logic.
 </details>
 
+### Journals
+
+- Use `submissionModel: "rolling"`.
+- Fill `ccfRank`, `caaiRank`, `casPartition`, and `jcrQuartile` when known.
+- Use `"N/A"` when a metric is unavailable or the venue is not listed.
+- `sourceUrl` should support the rolling-submission claim with an official journal or publisher page.
+- `specialIssueLabel` and `specialIssueUrl` are optional, but should be added together when relevant.
+
 <details>
 <summary>Journal template</summary>
 
@@ -185,35 +228,3 @@ Journal notes:
 - `dblp`, `keywords`, `specialIssueLabel`, and `specialIssueUrl` are optional.
 - Prefer keeping `caaiRank`, `ccfRank`, `casPartition`, and `jcrQuartile` present, using `"N/A"` when needed.
 </details>
-
-## Issues and PRs
-
-Open an issue for:
-
-- Data additions and updates that need confirmation before implementation
-- Bug reports
-- Feature requests
-- Others such as docs, cleanup, or discussion topics
-
-Include:
-
-- A short description of the change or problem
-- Relevant venue name or affected page
-- Source URL if the issue is about data
-- Reproduction steps if the issue is a bug
-- Screenshot if the issue is visual
-
-In a PR description, include:
-
-- Which contribution type it belongs to
-- What changed
-- Why it changed
-- Source links used, if applicable
-
-Suggested PR checklist:
-
-- [ ] I identified the contribution type
-- [ ] I updated the relevant files
-- [ ] I added or updated source links when needed
-- [ ] I ran `npm run build`
-- [ ] I checked the affected UI if I changed layout or styling
