@@ -1,31 +1,43 @@
 import { useEffect, useRef, useState } from 'react';
 import { HelpCircle } from 'lucide-react';
-import { categories, ratingFilters, Category, RatingFilter, venueTypes, VenueType } from '../data/conferences';
+import { categories, ratingFilters, Category, RatingFilter } from '../data/conferences';
 
 interface FilterPanelProps {
-  selectedVenueType: 'All' | VenueType;
-  onVenueTypeChange: (value: 'All' | VenueType) => void;
+  selectedVenueType: 'All' | 'conference' | 'journal';
+  showFavoritesOnly: boolean;
+  totalVenueCount: number;
+  conferenceCount: number;
+  journalCount: number;
+  favoriteCount: number;
+  onShowAllVenues: () => void;
+  onShowConferenceView: () => void;
+  onShowJournalView: () => void;
+  onShowFavoritesOnlyChange: (value: boolean) => void;
   selectedCategory: 'All' | Category;
   onCategoryChange: (value: 'All' | Category) => void;
   sortBy: 'deadline' | 'title';
   onSortChange: (value: 'deadline' | 'title') => void;
   selectedRatingFilter: RatingFilter;
   onRatingFilterChange: (value: RatingFilter) => void;
-  showFavoritesOnly: boolean;
-  onShowFavoritesOnlyChange: (value: boolean) => void;
 }
 
 function FilterPanel({
   selectedVenueType,
-  onVenueTypeChange,
+  showFavoritesOnly,
+  totalVenueCount,
+  conferenceCount,
+  journalCount,
+  favoriteCount,
+  onShowAllVenues,
+  onShowConferenceView,
+  onShowJournalView,
+  onShowFavoritesOnlyChange,
   selectedCategory,
   onCategoryChange,
   sortBy,
   onSortChange,
   selectedRatingFilter,
   onRatingFilterChange,
-  showFavoritesOnly,
-  onShowFavoritesOnlyChange,
 }: FilterPanelProps) {
   const [isRasHelpOpen, setIsRasHelpOpen] = useState(false);
   const rasHelpHideTimeoutRef = useRef<number | null>(null);
@@ -61,18 +73,32 @@ function FilterPanel({
   return (
     <aside className="control-card space-y-6">
       <section>
-        <p className="filter-title">Type</p>
+        <p className="filter-title">View</p>
         <div className="chip-row">
-          {venueTypes.map((type) => (
-            <button
-              key={type}
-              type="button"
-              className={selectedVenueType === type ? 'filter-chip active' : 'filter-chip'}
-              onClick={() => onVenueTypeChange(type)}
-            >
-              {type === 'All' ? 'All' : type[0].toUpperCase() + type.slice(1)}
-            </button>
-          ))}
+          <button
+            type="button"
+            className={selectedVenueType === 'All' && !showFavoritesOnly ? 'filter-chip filter-chip-with-count active' : 'filter-chip filter-chip-with-count'}
+            onClick={onShowAllVenues}
+          >
+            <span className="filter-chip-label">All</span>
+            <span className="filter-chip-count">{totalVenueCount}</span>
+          </button>
+          <button
+            type="button"
+            className={selectedVenueType === 'conference' && !showFavoritesOnly ? 'filter-chip filter-chip-with-count active' : 'filter-chip filter-chip-with-count'}
+            onClick={onShowConferenceView}
+          >
+            <span className="filter-chip-label">Conferences</span>
+            <span className="filter-chip-count">{conferenceCount}</span>
+          </button>
+          <button
+            type="button"
+            className={selectedVenueType === 'journal' && !showFavoritesOnly ? 'filter-chip filter-chip-with-count active' : 'filter-chip filter-chip-with-count'}
+            onClick={onShowJournalView}
+          >
+            <span className="filter-chip-label">Journals</span>
+            <span className="filter-chip-count">{journalCount}</span>
+          </button>
         </div>
       </section>
 
@@ -165,13 +191,14 @@ function FilterPanel({
 
       <section>
         <p className="filter-title">Focus</p>
-        <label className="favorite-toggle">
+        <label className="filter-toggle">
           <input
             type="checkbox"
             checked={showFavoritesOnly}
             onChange={(event) => onShowFavoritesOnlyChange(event.target.checked)}
           />
-          <span>Followed only</span>
+          <span className="filter-toggle-label">Followed only</span>
+          <span className="filter-toggle-count">{favoriteCount}</span>
         </label>
       </section>
     </aside>

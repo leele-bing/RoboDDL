@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
 import { VenueView } from '../data/conferences';
 
 interface SubmissionCalendarProps {
@@ -47,7 +45,6 @@ function getDeadlineDay(venue: VenueView) {
 }
 
 function SubmissionCalendar({ venues, now, favoriteVenueIds }: SubmissionCalendarProps) {
-  const [isOpen, setIsOpen] = useState(false);
   const conferenceVenues = venues.filter((venue) => {
     return (
       venue.venueType === 'conference' &&
@@ -73,55 +70,34 @@ function SubmissionCalendar({ venues, now, favoriteVenueIds }: SubmissionCalenda
   });
 
   return (
-    <section className="calendar-card">
-      <button
-        type="button"
-        className={isOpen ? 'calendar-toggle open' : 'calendar-toggle'}
-        onClick={() => setIsOpen((open) => !open)}
-      >
-        <div>
-          <h2 className="calendar-title">
-            <span>Submission Calendar</span>
-          </h2>
-          {isOpen ? <p className="calendar-note">What can you submit each month?</p> : null}
-        </div>
-        <ChevronDown className={isOpen ? 'calendar-chevron open' : 'calendar-chevron'} />
-      </button>
-
-      {isOpen ? (
-        <div className="calendar-grid">
-          {months.map((month) => (
-            <article key={month.key} className="calendar-month">
-              <div className="calendar-month-head">
-                <strong>{month.label}</strong>
-                <span>{month.venues.length} venues</span>
-              </div>
-              {month.venues.length > 0 ? (
-                <div className="calendar-list">
-                  {month.venues.map((venue) => (
-                    <div
-                      key={venue.id}
-                      className={
-                        favoriteVenueIds.includes(venue.id)
-                          ? 'calendar-item calendar-item-following'
-                          : 'calendar-item'
-                      }
-                    >
-                      <span>{venue.title}</span>
-                      <span>
-                        {venue.countdownLabel === 'Abstract deadline' ? 'Abs.' : 'Paper'} {getDeadlineDay(venue)}
-                      </span>
-                    </div>
-                  ))}
+    <div className="calendar-grid">
+      {months.map((month) => (
+        <article key={month.key} className="calendar-month">
+          <div className="calendar-month-head">
+            <strong>{month.label}</strong>
+          </div>
+          {month.venues.length > 0 ? (
+            <div className="calendar-list">
+              {month.venues.map((venue) => (
+                <div
+                  key={venue.id}
+                  className={
+                    favoriteVenueIds.includes(venue.id)
+                      ? 'calendar-item calendar-item-following'
+                      : 'calendar-item'
+                  }
+                >
+                  <span>{venue.title}</span>
+                  <span>
+                    {venue.countdownLabel === 'Abstract deadline' ? 'Abs.' : 'Paper'} {getDeadlineDay(venue)}
+                  </span>
                 </div>
-              ) : (
-                <div className="calendar-empty">No tracked conference deadlines.</div>
-              )}
-            </article>
-          ))}
-        </div>
-      ) : null}
-    </section>
+              ))}
+            </div>
+          ) : null}
+        </article>
+      ))}
+    </div>
   );
 }
 

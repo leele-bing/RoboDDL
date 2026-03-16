@@ -39,22 +39,39 @@ a {
   .hero-card,
   .toolbar-card,
   .control-card,
-  .venue-card,
-  .stat-card {
+  .venue-card {
     @apply rounded-[18px] border border-slate-200 bg-white shadow-sm;
   }
 
   .hero-card {
-    @apply grid gap-3 p-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(240px,0.7fr)] lg:p-5;
+    @apply p-4 lg:p-5;
   }
 
   .hero-copy {
     @apply flex flex-col gap-2;
   }
 
+  .hero-topbar {
+    @apply flex items-start justify-between gap-4;
+  }
+
+  .hero-tools {
+    @apply relative flex-shrink-0 self-start;
+  }
+
   .hero-copy h1 {
-    font-family: 'Bricolage Grotesque', 'Plus Jakarta Sans', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
-    @apply max-w-4xl text-5xl font-extrabold leading-none tracking-[-0.04em] text-slate-950 sm:text-6xl;
+    font-family: 'Audiowide', 'Bricolage Grotesque', 'Plus Jakarta Sans', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+    @apply min-w-0 max-w-4xl text-5xl font-extrabold leading-none tracking-[-0.04em] text-slate-950 sm:text-6xl;
+  }
+
+  .hero-title-ddl {
+    font-family: inherit;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #d97706 0%, #f59e0b 60%, #fbbf24 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .hero-copy p {
@@ -70,46 +87,77 @@ a {
   }
 
   .hero-actions {
-    @apply flex flex-wrap items-center gap-2;
+    @apply inline-flex items-center gap-1 self-end rounded-full border border-slate-200 bg-white/90 p-1 shadow-sm backdrop-blur;
   }
 
-  .theme-toggle {
-    @apply inline-flex h-9 items-center gap-2 rounded-full border border-slate-300 bg-white px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50 hover:text-slate-900;
+  .hero-icon-button {
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-full border border-transparent bg-transparent text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2;
   }
 
-  .hero-star-badge {
-    @apply inline-flex items-stretch rounded-md shadow-sm;
+  .hero-icon-button.active {
+    @apply border-amber-200 bg-amber-50 text-amber-700;
   }
 
-  .hero-star-button,
-  .hero-star-count {
-    @apply inline-flex h-9 items-center border border-slate-300 bg-white text-sm text-slate-700 transition;
+  .top-panel-card {
+    @apply p-4 lg:p-5;
   }
 
-  .hero-star-button {
-    @apply gap-2 rounded-l-md px-3 font-medium hover:bg-slate-50 hover:text-slate-900;
+  .top-panel-switches {
+    @apply grid w-full grid-cols-2 gap-3;
   }
 
-  .hero-star-count {
-    font-family: 'JetBrains Mono', 'SFMono-Regular', monospace;
-    @apply -ml-px min-w-[3.25rem] justify-center rounded-r-md px-3 font-semibold hover:bg-slate-50 hover:text-slate-900;
+  .top-panel-switch {
+    @apply flex min-h-[4.25rem] items-center gap-3 rounded-[16px] border border-slate-200 bg-gradient-to-br from-slate-50 to-white px-4 py-4 text-left shadow-sm transition hover:border-slate-300 hover:shadow-md;
   }
 
-  .hero-star-button span,
-  .hero-star-count span {
-    @apply leading-none;
+  .top-panel-switch-icon {
+    @apply inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 shadow-sm;
   }
 
-  .hero-panel {
-    @apply flex flex-col items-center justify-center rounded-[16px] border border-slate-200 bg-slate-50 p-4 text-center text-slate-900;
+  .top-panel-switch-title {
+    @apply block text-base font-semibold leading-tight text-slate-950 sm:text-lg;
   }
 
-  .live-label-row {
+  .top-panel-switch.active {
+    @apply border-slate-900 bg-slate-900 text-white shadow-lg;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 18px 36px -24px rgba(15, 23, 42, 0.85);
+  }
+
+  .top-panel-switch.active .top-panel-switch-title {
+    @apply text-white;
+  }
+
+  .top-panel-switch.active .top-panel-switch-icon {
+    @apply border-white/10 bg-white/10 text-amber-300 shadow-none;
+  }
+
+  .top-panel-body {
+    @apply mt-3;
+  }
+
+  .time-zone-grid {
+    @apply grid gap-3 lg:grid-cols-2;
+  }
+
+  .time-zone-card {
+    @apply rounded-[14px] border border-slate-200 bg-white p-3;
+  }
+
+  .time-zone-meta {
+    @apply flex items-start justify-between gap-3;
+  }
+
+  .time-zone-label-row {
     @apply flex items-center gap-1.5;
   }
 
-  .live-label {
-    @apply text-sm font-medium text-slate-500 sm:text-base;
+  .time-zone-label {
+    @apply text-sm font-medium text-slate-600;
+  }
+
+  .time-zone-badge {
+    font-family: 'JetBrains Mono', 'SFMono-Regular', monospace;
+    @apply inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-semibold leading-none text-slate-500;
   }
 
   .live-help {
@@ -136,46 +184,13 @@ a {
     @apply mt-2 inline-flex font-medium text-slate-900 underline decoration-slate-300 underline-offset-2 transition hover:text-slate-700;
   }
 
-  .live-time {
+  .time-zone-time {
     font-family: 'JetBrains Mono', 'SFMono-Regular', monospace;
-    @apply mt-2 text-2xl font-semibold leading-tight sm:text-3xl;
+    @apply mt-3 text-2xl font-semibold leading-tight text-slate-950 sm:text-[2rem];
   }
 
-  .live-date {
-    @apply mt-2 text-base text-slate-500 sm:text-lg;
-  }
-
-  .stats-grid {
-    @apply grid grid-cols-2 gap-3 lg:grid-cols-4;
-  }
-
-  .stat-card {
-    @apply flex flex-col gap-1.5 p-3;
-  }
-
-  .stat-card-button {
-    @apply text-left transition hover:border-slate-300 hover:bg-slate-50;
-  }
-
-  .stat-card-button.active {
-    @apply border-slate-900 bg-slate-900;
-  }
-
-  .stat-card span {
-    @apply text-xs font-medium text-slate-500;
-  }
-
-  .stat-card-button.active span {
-    @apply text-slate-300;
-  }
-
-  .stat-card strong {
-    font-family: 'JetBrains Mono', 'SFMono-Regular', monospace;
-    @apply text-xl text-slate-950;
-  }
-
-  .stat-card-button.active strong {
-    @apply text-white;
+  .time-zone-date {
+    @apply mt-1 text-sm text-slate-500 sm:text-base;
   }
 
   .toolbar-card {
@@ -207,8 +222,7 @@ a {
   }
 
   .calendar-title span {
-    @apply inline-flex rounded-full border border-amber-200 bg-gradient-to-r from-amber-100 via-amber-50 to-white px-3 py-1 text-slate-950 shadow-sm;
-    box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.12), 0 10px 24px -18px rgba(217, 119, 6, 0.9);
+    @apply inline-flex border-l-4 border-amber-400 bg-transparent py-0.5 pl-3 text-slate-950;
   }
 
   .calendar-note {
@@ -243,10 +257,6 @@ a {
     @apply text-base text-slate-950;
   }
 
-  .calendar-month-head span {
-    @apply text-xs font-medium text-slate-500;
-  }
-
   .calendar-list {
     @apply mt-4 flex flex-col gap-2;
   }
@@ -268,10 +278,6 @@ a {
     @apply text-amber-700;
   }
 
-  .calendar-empty {
-    @apply mt-4 text-sm text-slate-400;
-  }
-
   .search-shell {
     @apply flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3;
   }
@@ -289,7 +295,7 @@ a {
   }
 
   .control-card {
-    @apply self-start overflow-visible p-4 xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)] xl:overflow-visible;
+    @apply self-start overflow-visible p-4 xl:sticky xl:top-4;
   }
 
   .filter-title {
@@ -312,12 +318,42 @@ a {
     @apply inline-flex items-center gap-1.5 pr-3;
   }
 
+  .filter-chip-with-count {
+    @apply inline-flex items-center gap-2 pr-2;
+  }
+
   .filter-chip-label {
     @apply leading-none;
   }
 
+  .filter-chip-count {
+    font-family: 'JetBrains Mono', 'SFMono-Regular', monospace;
+    @apply inline-flex min-w-[1.75rem] items-center justify-center rounded-full border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-[11px] font-semibold leading-none text-slate-600;
+  }
+
   .filter-chip.active {
     @apply border-slate-950 bg-slate-950 text-white;
+  }
+
+  .filter-chip.active .filter-chip-count {
+    @apply border-white/15 bg-white/10 text-white;
+  }
+
+  .filter-toggle {
+    @apply flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700;
+  }
+
+  .filter-toggle input {
+    @apply h-4 w-4 rounded border-slate-300;
+  }
+
+  .filter-toggle-label {
+    @apply min-w-0 flex-1;
+  }
+
+  .filter-toggle-count {
+    font-family: 'JetBrains Mono', 'SFMono-Regular', monospace;
+    @apply inline-flex min-w-[1.75rem] items-center justify-center rounded-full border border-slate-200 bg-white px-1.5 py-0.5 text-[11px] font-semibold leading-none text-slate-600;
   }
 
   .filter-chip-help-icon {
@@ -348,14 +384,6 @@ a {
 
   .filter-chip-help .filter-chip.active .filter-chip-help-icon {
     @apply border-white/20 text-white;
-  }
-
-  .favorite-toggle {
-    @apply flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700;
-  }
-
-  .favorite-toggle input {
-    @apply h-4 w-4 rounded border-slate-300;
   }
 
   .results-column {
@@ -670,7 +698,6 @@ a {
 :root[data-theme='dark'] .toolbar-card,
 :root[data-theme='dark'] .control-card,
 :root[data-theme='dark'] .venue-card,
-:root[data-theme='dark'] .stat-card,
 :root[data-theme='dark'] .calendar-card {
   border-color: rgba(71, 85, 105, 0.42);
   background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.84));
@@ -678,11 +705,12 @@ a {
 }
 
 :root[data-theme='dark'] .hero-copy h1,
+:root[data-theme='dark'] .top-panel-switch-title,
+:root[data-theme='dark'] .time-zone-time,
 :root[data-theme='dark'] .calendar-title,
 :root[data-theme='dark'] .calendar-month-head strong,
 :root[data-theme='dark'] .results-head h2,
 :root[data-theme='dark'] .venue-head h2,
-:root[data-theme='dark'] .stat-card strong,
 :root[data-theme='dark'] .meta-value,
 :root[data-theme='dark'] .summary-deadline strong,
 :root[data-theme='dark'] .rolling-panel strong,
@@ -697,12 +725,9 @@ a {
 }
 
 :root[data-theme='dark'] .hero-copy p,
-:root[data-theme='dark'] .stat-card span,
-:root[data-theme='dark'] .live-label,
-:root[data-theme='dark'] .live-date,
+:root[data-theme='dark'] .time-zone-label,
+:root[data-theme='dark'] .time-zone-date,
 :root[data-theme='dark'] .calendar-note,
-:root[data-theme='dark'] .calendar-month-head span,
-:root[data-theme='dark'] .calendar-empty,
 :root[data-theme='dark'] .toolbar-note,
 :root[data-theme='dark'] .filter-title,
 :root[data-theme='dark'] .results-kicker,
@@ -726,8 +751,8 @@ a {
 :root[data-theme='dark'] .hero-panel,
 :root[data-theme='dark'] .live-help-popover,
 :root[data-theme='dark'] .filter-chip-help-popover,
+:root[data-theme='dark'] .time-zone-card,
 :root[data-theme='dark'] .calendar-month,
-:root[data-theme='dark'] .favorite-toggle,
 :root[data-theme='dark'] .venue-expanded,
 :root[data-theme='dark'] .summary-deadline,
 :root[data-theme='dark'] .meta-block,
@@ -736,6 +761,34 @@ a {
 :root[data-theme='dark'] .source-strip {
   border-color: rgba(71, 85, 105, 0.4);
   background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.94));
+}
+
+:root[data-theme='dark'] .top-panel-switch {
+  border-color: rgba(71, 85, 105, 0.4);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.94));
+}
+
+:root[data-theme='dark'] .top-panel-switch.active {
+  border-color: rgba(251, 191, 36, 0.34);
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.9), rgba(245, 158, 11, 0.82));
+  color: #111827;
+}
+
+:root[data-theme='dark'] .top-panel-switch-icon {
+  border-color: rgba(71, 85, 105, 0.42);
+  background: rgba(30, 41, 59, 0.82);
+  color: #dbe7f4;
+  box-shadow: none;
+}
+
+:root[data-theme='dark'] .top-panel-switch.active .top-panel-switch-title {
+  color: #111827;
+}
+
+:root[data-theme='dark'] .top-panel-switch.active .top-panel-switch-icon {
+  border-color: rgba(17, 24, 39, 0.12);
+  background: rgba(17, 24, 39, 0.12);
+  color: #111827;
 }
 
 :root[data-theme='dark'] .live-help-popover a:hover {
@@ -765,9 +818,6 @@ a {
 :root[data-theme='dark'] .expand-button,
 :root[data-theme='dark'] .favorite-button,
 :root[data-theme='dark'] .action-button,
-:root[data-theme='dark'] .theme-toggle,
-:root[data-theme='dark'] .hero-star-button,
-:root[data-theme='dark'] .hero-star-count,
 :root[data-theme='dark'] .live-help-trigger,
 :root[data-theme='dark'] .results-chips span {
   border-color: rgba(71, 85, 105, 0.42);
@@ -775,8 +825,49 @@ a {
   color: #dbe7f4;
 }
 
+:root[data-theme='dark'] .hero-actions {
+  border-color: rgba(71, 85, 105, 0.42);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(17, 24, 39, 0.88));
+  box-shadow: 0 14px 30px rgba(2, 6, 23, 0.22);
+}
+
+:root[data-theme='dark'] .hero-icon-button {
+  color: #cbd5e1;
+}
+
+:root[data-theme='dark'] .time-zone-badge {
+  border-color: rgba(71, 85, 105, 0.42);
+  background: rgba(30, 41, 59, 0.88);
+  color: #cbd5e1;
+}
+
 :root[data-theme='dark'] .filter-chip-help-icon {
   border-color: rgba(100, 116, 139, 0.45);
+  color: #cbd5e1;
+}
+
+:root[data-theme='dark'] .filter-chip-count {
+  border-color: rgba(71, 85, 105, 0.42);
+  background: rgba(30, 41, 59, 0.88);
+  color: #cbd5e1;
+}
+
+:root[data-theme='dark'] .filter-toggle {
+  border-color: rgba(71, 85, 105, 0.4);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.94));
+  color: #e2e8f0;
+}
+
+:root[data-theme='dark'] .filter-toggle input {
+  accent-color: #fbbf24;
+  border-color: rgba(100, 116, 139, 0.7);
+  background: rgba(15, 23, 42, 0.92);
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.5);
+}
+
+:root[data-theme='dark'] .filter-toggle-count {
+  border-color: rgba(71, 85, 105, 0.42);
+  background: rgba(30, 41, 59, 0.88);
   color: #cbd5e1;
 }
 
@@ -784,12 +875,10 @@ a {
 :root[data-theme='dark'] .expand-button:hover,
 :root[data-theme='dark'] .favorite-button:hover,
 :root[data-theme='dark'] .action-button:hover,
-:root[data-theme='dark'] .theme-toggle:hover,
-:root[data-theme='dark'] .hero-star-button:hover,
-:root[data-theme='dark'] .hero-star-count:hover,
+:root[data-theme='dark'] .hero-icon-button:hover,
 :root[data-theme='dark'] .live-help-trigger:hover {
-  border-color: rgba(100, 116, 139, 0.5);
-  background: linear-gradient(180deg, rgba(30, 41, 59, 0.98), rgba(30, 41, 59, 0.9));
+  border-color: rgba(100, 116, 139, 0.18);
+  background: rgba(30, 41, 59, 0.88);
   color: #f8fafc;
 }
 
@@ -802,20 +891,25 @@ a {
 }
 
 :root[data-theme='dark'] .filter-chip.active,
-:root[data-theme='dark'] .stat-card-button.active,
 :root[data-theme='dark'] .action-button.primary {
   border-color: rgba(251, 191, 36, 0.34);
   background: linear-gradient(135deg, rgba(251, 191, 36, 0.9), rgba(245, 158, 11, 0.82));
   color: #111827;
 }
 
-:root[data-theme='dark'] .stat-card-button.active span,
-:root[data-theme='dark'] .stat-card-button.active strong {
+:root[data-theme='dark'] .hero-icon-button.active {
+  border-color: rgba(251, 191, 36, 0.34);
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.9), rgba(245, 158, 11, 0.82));
+  color: #111827;
+}
+
+:root[data-theme='dark'] .filter-chip.active .filter-chip-count {
+  border-color: rgba(17, 24, 39, 0.12);
+  background: rgba(17, 24, 39, 0.12);
   color: #111827;
 }
 
 :root[data-theme='dark'] .filter-chip.active:hover,
-:root[data-theme='dark'] .stat-card-button.active:hover,
 :root[data-theme='dark'] .action-button.primary:hover,
 :root[data-theme='dark'] .back-to-top:hover {
   border-color: rgba(251, 191, 36, 0.36);
@@ -861,19 +955,16 @@ a {
 }
 
 :root[data-theme='dark'] .calendar-title span {
-  border-color: rgba(251, 191, 36, 0.34);
-  background: linear-gradient(90deg, rgba(251, 191, 36, 0.16), rgba(250, 204, 21, 0.08), rgba(15, 23, 42, 0.25));
+  border-color: rgba(251, 191, 36, 0.78);
+  background: transparent;
   color: #f8fafc;
-  box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.08), 0 14px 28px -20px rgba(251, 191, 36, 0.55);
+  box-shadow: none;
 }
 
 :root[data-theme='dark'] .calendar-chevron,
 :root[data-theme='dark'] .expand-button,
 :root[data-theme='dark'] .favorite-button,
-:root[data-theme='dark'] .live-help-trigger,
-:root[data-theme='dark'] .theme-toggle,
-:root[data-theme='dark'] .hero-star-button,
-:root[data-theme='dark'] .hero-star-count {
+:root[data-theme='dark'] .live-help-trigger {
   color: #cbd5e1;
 }
 
@@ -881,9 +972,11 @@ a {
   background: rgba(148, 163, 184, 0.28);
 }
 
-:root[data-theme='dark'] .live-time {
-  color: #f8fafc;
-  text-shadow: 0 0 18px rgba(56, 189, 248, 0.12);
+:root[data-theme='dark'] .hero-title-ddl {
+  background: linear-gradient(135deg, #fbbf24 0%, #fde68a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 :root[data-theme='dark'] .hero-panel {
@@ -891,16 +984,6 @@ a {
   box-shadow: inset 0 1px 0 rgba(148, 163, 184, 0.08);
 }
 
-:root[data-theme='dark'] .favorite-toggle {
-  color: #e2e8f0;
-}
-
-:root[data-theme='dark'] .favorite-toggle input {
-  accent-color: #fbbf24;
-  border-color: rgba(100, 116, 139, 0.7);
-  background: rgba(15, 23, 42, 0.92);
-  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.5);
-}
 
 :root[data-theme='dark'] .search-shell {
   box-shadow: inset 0 1px 0 rgba(148, 163, 184, 0.05);
@@ -911,8 +994,7 @@ a {
 }
 
 :root[data-theme='dark'] .venue-card,
-:root[data-theme='dark'] .calendar-card,
-:root[data-theme='dark'] .stat-card {
+:root[data-theme='dark'] .calendar-card {
   background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(17, 24, 39, 0.86));
 }
 
@@ -926,21 +1008,30 @@ a {
     font-size: 2.5rem;
   }
 
-  .hero-panel {
-    padding: 0.625rem 1rem;
+  .top-panel-card {
+    padding: 0.875rem;
     border-radius: 14px;
   }
 
-  .live-label {
-    font-size: 0.8125rem;
+  .top-panel-switch-title {
+    font-size: 1rem;
   }
 
-  .live-time {
-    font-size: 1.75rem;
-    margin-top: 0.25rem;
+  .top-panel-switches {
+    gap: 0.5rem;
   }
 
-  .live-date {
+  .top-panel-switch {
+    min-height: 2.75rem;
+    padding: 0.875rem 0.75rem;
+  }
+
+  .time-zone-time {
+    font-size: 1.625rem;
+    margin-top: 0.5rem;
+  }
+
+  .time-zone-date {
     font-size: 0.875rem;
     margin-top: 0.25rem;
   }

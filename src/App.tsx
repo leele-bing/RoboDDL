@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowUp, HelpCircle, Monitor, Moon, Star, Sun } from 'lucide-react';
+import { ArrowUp, CalendarDays, Clock3, Github, HelpCircle, Monitor, Moon, Sun } from 'lucide-react';
 import ConferenceCard from './components/ConferenceCard';
 import FilterPanel from './components/FilterPanel';
 import SearchBar from './components/SearchBar';
@@ -23,8 +23,8 @@ function getInitialTheme(): Theme {
 
 function App() {
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
-  const [githubStars, setGithubStars] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeTopPanel, setActiveTopPanel] = useState<'calendar' | 'timezones' | null>(null);
   const [selectedVenueType, setSelectedVenueType] = useState<'All' | VenueType>('All');
   const [selectedCategory, setSelectedCategory] = useState<'All' | Category>('All');
   const [sortBy, setSortBy] = useState<'deadline' | 'title'>('deadline');
@@ -62,36 +62,6 @@ function App() {
     }, 1000);
 
     return () => window.clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    const abortController = new AbortController();
-
-    async function loadGithubStars() {
-      try {
-        const response = await fetch('https://api.github.com/repos/RoboDDL/RoboDDL', {
-          signal: abortController.signal,
-        });
-
-        if (!response.ok) {
-          return;
-        }
-
-        const payload = (await response.json()) as { stargazers_count?: number };
-
-        if (typeof payload.stargazers_count === 'number') {
-          setGithubStars(payload.stargazers_count);
-        }
-      } catch (error) {
-        if ((error as Error).name !== 'AbortError') {
-          console.error('Failed to load GitHub stars.', error);
-        }
-      }
-    }
-
-    void loadGithubStars();
-
-    return () => abortController.abort();
   }, []);
 
   useEffect(() => {
@@ -190,13 +160,22 @@ function App() {
     };
   }, [favoriteVenueIds.length, venues]);
 
-  const githubStarsLabel =
-    githubStars === null
-      ? null
-      : new Intl.NumberFormat('en-US', {
-          notation: githubStars >= 1000 ? 'compact' : 'standard',
-          maximumFractionDigits: 1,
-        }).format(githubStars);
+  const themeToggleLabel = theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode';
+  const githubLabel = 'Open RoboDDL on GitHub';
+  const timeZoneCards = [
+    {
+      id: 'aoe',
+      label: 'AoE Time Zone',
+      badge: 'UTC-12',
+      timeZone: 'Etc/GMT+12',
+    },
+    {
+      id: 'pt',
+      label: 'Pacific Time',
+      badge: 'PT',
+      timeZone: 'America/Los_Angeles',
+    },
+  ] as const;
 
   const toggleFavorite = (venueId: string) => {
     setFavoriteVenueIds((current) => {
@@ -251,15 +230,8 @@ function App() {
     setShowFavoritesOnly(false);
   };
 
-  const toggleFollowingView = () => {
-    if (showFavoritesOnly && selectedVenueType === 'All') {
-      showAllVenues();
-      return;
-    }
-
-    setSelectedVenueType('All');
-    setSelectedCategory('All');
-    setShowFavoritesOnly(true);
+  const toggleTopPanel = (panel: 'calendar' | 'timezones') => {
+    setActiveTopPanel((current) => (current === panel ? null : panel));
   };
 
   return (
@@ -267,145 +239,147 @@ function App() {
       <main className="page-frame">
         <section className="hero-card">
           <div className="hero-copy">
-            <h1>RoboDDL</h1>
-            <div className="hero-note">🚧 [WIP] Deadlines and ratings may still contain errors!</div>
-            <div className="hero-mobile-tip sm:hidden">
-              <Monitor className="h-3.5 w-3.5" />
-              <span>Best experienced on desktop</span>
-            </div>
-            <p>Your one-stop tracker for robotics conferences and journals</p>
-            <div className="hero-actions">
-              <button
-                type="button"
-                className="theme-toggle"
-                onClick={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))}
-                aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
-              >
-                {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-                <span>{theme === 'light' ? 'Switch to dark' : 'Switch to light'}</span>
-              </button>
-              {githubStarsLabel ? (
-                <div className="hero-star-badge" aria-label={`RoboDDL GitHub stars: ${githubStars}`}>
+            <div className="hero-topbar">
+              <h1>Robo<span className="hero-title-ddl">DDL</span></h1>
+              <div className="hero-tools">
+                <div className="hero-actions">
                   <a
                     href="https://github.com/RoboDDL/RoboDDL"
                     target="_blank"
                     rel="noreferrer"
-                    className="hero-star-button"
-                    aria-label="Star RoboDDL on GitHub"
+                    className="hero-icon-button"
+                    aria-label={githubLabel}
+                    title={githubLabel}
                   >
-                    <Star className="h-4 w-4" />
-                    <span>Star</span>
+                    <Github className="h-4 w-4" />
                   </a>
-                  <a
-                    href="https://github.com/RoboDDL/RoboDDL/stargazers"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hero-star-count"
-                    aria-label={`View ${githubStars} RoboDDL GitHub stars`}
+                  <button
+                    type="button"
+                    className="hero-icon-button"
+                    onClick={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))}
+                    aria-label={themeToggleLabel}
+                    title={themeToggleLabel}
                   >
-                    <span>{githubStarsLabel}</span>
-                  </a>
-                </div>
-              ) : null}
-            </div>
-          </div>
-
-          <div className="hero-panel">
-            <div className="live-label-row">
-              <div className="live-label">Current AoE Time</div>
-              <div
-                className="live-help"
-                onMouseEnter={openAoEHelp}
-                onMouseLeave={scheduleAoEHelpClose}
-                onFocusCapture={openAoEHelp}
-                onBlurCapture={(event) => {
-                  const nextFocusTarget = event.relatedTarget as Node | null;
-
-                  if (nextFocusTarget && event.currentTarget.contains(nextFocusTarget)) {
-                    return;
-                  }
-
-                  scheduleAoEHelpClose();
-                }}
-              >
-                <button type="button" className="live-help-trigger" aria-label="What is AoE time?">
-                  <HelpCircle className="h-3.5 w-3.5" />
-                </button>
-                <div className={isAoEHelpOpen ? 'live-help-popover open' : 'live-help-popover'} role="tooltip">
-                  <p>AoE means "Anywhere on Earth" and follows UTC-12 for deadline cutoffs.</p>
-                  <a
-                    href="https://en.wikipedia.org/wiki/Anywhere_on_Earth"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Learn more on Wikipedia
-                  </a>
+                    {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+                  </button>
                 </div>
               </div>
             </div>
-            <div className="live-time">
-              {currentTime.toLocaleTimeString('en-US', {
-                hour12: false,
-                timeZone: 'Etc/GMT+12',
-              })}
+            <p>Your one-stop tracker for robotics conferences and journals</p>
+            <div className="hero-mobile-tip sm:hidden">
+              <Monitor className="h-3.5 w-3.5" />
+              <span>Best experienced on desktop</span>
             </div>
-            <div className="live-date">
-              {currentTime.toLocaleDateString('en-US', {
-                timeZone: 'Etc/GMT+12',
-              })}
-            </div>
+            <div className="hero-note">🚧 [WIP] Deadlines and ratings may still contain errors!</div>
           </div>
         </section>
 
-        <SubmissionCalendar venues={filteredVenues} now={currentTime} favoriteVenueIds={favoriteVenueIds} />
+        <section className="calendar-card top-panel-card">
+          <div className="top-panel-switches">
+            <button
+              type="button"
+              className={activeTopPanel === 'calendar' ? 'top-panel-switch active' : 'top-panel-switch'}
+              onClick={() => toggleTopPanel('calendar')}
+            >
+              <span className="top-panel-switch-icon" aria-hidden="true">
+                <CalendarDays className="h-4 w-4" />
+              </span>
+              <strong className="top-panel-switch-title">Submission Calendar</strong>
+            </button>
+            <button
+              type="button"
+              className={activeTopPanel === 'timezones' ? 'top-panel-switch active' : 'top-panel-switch'}
+              onClick={() => toggleTopPanel('timezones')}
+            >
+              <span className="top-panel-switch-icon" aria-hidden="true">
+                <Clock3 className="h-4 w-4" />
+              </span>
+              <strong className="top-panel-switch-title">Time Zones</strong>
+            </button>
+          </div>
 
-        <section className="stats-grid">
-          <button
-            type="button"
-            className={selectedVenueType === 'All' && !showFavoritesOnly ? 'stat-card stat-card-button active' : 'stat-card stat-card-button'}
-            onClick={showAllVenues}
-          >
-            <span>All venues</span>
-            <strong>{stats.conferenceCount + stats.journalCount}</strong>
-          </button>
-          <button
-            type="button"
-            className={selectedVenueType === 'conference' && !showFavoritesOnly ? 'stat-card stat-card-button active' : 'stat-card stat-card-button'}
-            onClick={toggleConferenceView}
-          >
-            <span>Conferences</span>
-            <strong>{stats.conferenceCount}</strong>
-          </button>
-          <button
-            type="button"
-            className={selectedVenueType === 'journal' && !showFavoritesOnly ? 'stat-card stat-card-button active' : 'stat-card stat-card-button'}
-            onClick={toggleJournalView}
-          >
-            <span>Journals</span>
-            <strong>{stats.journalCount}</strong>
-          </button>
-          <button
-            type="button"
-            className={showFavoritesOnly ? 'stat-card stat-card-button active' : 'stat-card stat-card-button'}
-            onClick={toggleFollowingView}
-          >
-            <span>Following</span>
-            <strong>{stats.favoriteCount}</strong>
-          </button>
+          {activeTopPanel ? (
+            <div className="top-panel-body">
+              {activeTopPanel === 'calendar' ? (
+                <SubmissionCalendar venues={filteredVenues} now={currentTime} favoriteVenueIds={favoriteVenueIds} />
+              ) : (
+                <div className="time-zone-grid">
+                  {timeZoneCards.map((zone) => (
+                    <section key={zone.id} className="time-zone-card">
+                      <div className="time-zone-meta">
+                        <div className="time-zone-label-row">
+                          <div className="time-zone-label">{zone.label}</div>
+                          {zone.id === 'aoe' ? (
+                            <div
+                              className="live-help"
+                              onMouseEnter={openAoEHelp}
+                              onMouseLeave={scheduleAoEHelpClose}
+                              onFocusCapture={openAoEHelp}
+                              onBlurCapture={(event) => {
+                                const nextFocusTarget = event.relatedTarget as Node | null;
+
+                                if (nextFocusTarget && event.currentTarget.contains(nextFocusTarget)) {
+                                  return;
+                                }
+
+                                scheduleAoEHelpClose();
+                              }}
+                            >
+                              <button type="button" className="live-help-trigger" aria-label="What is AoE time?">
+                                <HelpCircle className="h-3.5 w-3.5" />
+                              </button>
+                              <div className={isAoEHelpOpen ? 'live-help-popover open' : 'live-help-popover'} role="tooltip">
+                                <p>AoE means "Anywhere on Earth" and follows UTC-12 for deadline cutoffs.</p>
+                                <a
+                                  href="https://en.wikipedia.org/wiki/Anywhere_on_Earth"
+                                  target="_blank"
+                                  rel="noreferrer"
+                                >
+                                  Learn more on Wikipedia
+                                </a>
+                              </div>
+                            </div>
+                          ) : null}
+                        </div>
+                        <span className="time-zone-badge">{zone.badge}</span>
+                      </div>
+                      <div className="time-zone-time">
+                        {currentTime.toLocaleTimeString('en-US', {
+                          hour12: false,
+                          timeZone: zone.timeZone,
+                        })}
+                      </div>
+                      <div className="time-zone-date">
+                        {currentTime.toLocaleDateString('en-US', {
+                          timeZone: zone.timeZone,
+                        })}
+                      </div>
+                    </section>
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : null}
         </section>
 
         <section className="content-grid">
           <FilterPanel
             selectedVenueType={selectedVenueType}
-            onVenueTypeChange={setSelectedVenueType}
+            showFavoritesOnly={showFavoritesOnly}
+            totalVenueCount={stats.conferenceCount + stats.journalCount}
+            conferenceCount={stats.conferenceCount}
+            journalCount={stats.journalCount}
+            favoriteCount={stats.favoriteCount}
+            onShowAllVenues={showAllVenues}
+            onShowConferenceView={toggleConferenceView}
+            onShowJournalView={toggleJournalView}
+            onShowFavoritesOnlyChange={setShowFavoritesOnly}
             selectedCategory={selectedCategory}
             onCategoryChange={setSelectedCategory}
             sortBy={sortBy}
             onSortChange={setSortBy}
             selectedRatingFilter={selectedRatingFilter}
             onRatingFilterChange={setSelectedRatingFilter}
-            showFavoritesOnly={showFavoritesOnly}
-            onShowFavoritesOnlyChange={setShowFavoritesOnly}
           />
 
           <div className="results-column">
