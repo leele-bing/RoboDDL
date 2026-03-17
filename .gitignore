@@ -24,4 +24,4 @@ coverage/
 !.vscode/extensions.json
 .cache/
 
-scripts/**
+agents/
