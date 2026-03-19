@@ -17,8 +17,9 @@ knownEditions:
   - year: 2026
     paperDeadline: "2026-07-31T23:59:59"
     timezone: "PST"
-    conferenceDates: "December 7-9, 2026"
-    location: "Santa Clara, California"
+    conferenceDates: "December 6-9, 2026"
+    location: "Santa Clara, California, USA"
     link: "https://2026.ieee-humanoids.org/"
-    deadlineSourceLabel: "Humanoids 2026 Call for Papers"
-    deadlineSourceUrl: "https://2026.ieee-humanoids.org/call-for-papers/"
+    deadlineSourceLabel: "Humanoids 2026 official website"
+    deadlineSourceUrl: "https://2026.ieee-humanoids.org/"
+    note: "The official website lists July 31, 2026 as the paper deadline and calls the companion video deadline August 4, 2026 EOD Pacific Time."
