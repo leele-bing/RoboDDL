@@ -9,10 +9,6 @@ interface UiText {
   themeToggleLight: string;
   themeToggleDark: string;
   heroTagline: string;
-  seoIntro: {
-    title: string;
-    body: string;
-  };
   heroDesktopTip: string;
   heroWipNote: string;
   topPanels: {
@@ -123,11 +119,6 @@ export const uiText: Record<Language, UiText> = {
     themeToggleLight: 'Switch to light mode',
     themeToggleDark: 'Switch to dark mode',
     heroTagline: 'Track robot conference deadlines, robotics CFPs, and journal submissions in one place',
-    seoIntro: {
-      title: 'Robot conference deadlines, CFP links, and rankings in one place',
-      body:
-        'Looking for a robot conference, a robot conference deadline, or a robot conference DDL tracker? RoboDDL helps you follow upcoming robotics conferences and journals with paper deadlines, abstract deadlines, AoE cutoffs, rankings, locations, and official submission links.',
-    },
     heroDesktopTip: 'Best experienced on desktop',
     heroWipNote: '[WIP] Deadlines and ratings may still contain errors!',
     topPanels: {
@@ -216,11 +207,6 @@ export const uiText: Record<Language, UiText> = {
     themeToggleLight: '切换到浅色模式',
     themeToggleDark: '切换到深色模式',
     heroTagline: '一站式追踪机器人领域会议与期刊',
-    seoIntro: {
-      title: '机器人会议截稿、CFP 与投稿入口集中追踪',
-      body:
-        '如果你在搜索 robot conference、robot conference deadline 或 robot conference ddl，RoboDDL 会把机器人会议与期刊的论文截止时间、摘要截止时间、AoE 时间、评级、地点和官方投稿链接整理到一个页面里。',
-    },
     heroDesktopTip: '桌面端浏览体验更佳',
     heroWipNote: '[开发中] 截止日期和评级信息可能存在错误',
     topPanels: {

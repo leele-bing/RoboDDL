@@ -9,6 +9,10 @@
   color-scheme: light;
 }
 
+:root:lang(zh-CN) {
+  font-family: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
 body {
   margin: 0;
   min-width: 320px;
@@ -37,7 +41,6 @@ a {
   }
 
   .hero-card,
-  .seo-copy-card,
   .toolbar-card,
   .control-card,
   .venue-card {
@@ -45,10 +48,6 @@ a {
   }
 
   .hero-card {
-    @apply p-4 lg:p-5;
-  }
-
-  .seo-copy-card {
     @apply p-4 lg:p-5;
   }
 
@@ -64,21 +63,37 @@ a {
     @apply relative flex flex-shrink-0 items-center gap-2 self-start;
   }
 
-  .language-toggle {
+  .hero-tools-pill {
     @apply inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white/90 p-1 shadow-sm backdrop-blur;
   }
 
-  .language-toggle-button {
-    @apply inline-flex min-w-[3.25rem] items-center justify-center rounded-full px-3 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2;
+  .hero-tool-button {
+    @apply inline-flex items-center justify-center rounded-full border border-transparent bg-transparent text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2;
   }
 
-  .language-toggle-button.active {
+  .hero-tool-button-language {
+    @apply min-w-[4.5rem] px-4 py-2;
+  }
+
+  .hero-tool-button-icon {
+    @apply h-9 w-9;
+  }
+
+  .hero-tool-button.active {
     @apply bg-slate-900 text-white;
+  }
+
+  .hero-tools-divider {
+    @apply mx-1 h-6 w-px bg-slate-200;
   }
 
   .hero-copy h1 {
     font-family: 'Audiowide', 'Bricolage Grotesque', 'Plus Jakarta Sans', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
     @apply min-w-0 max-w-4xl text-5xl font-extrabold leading-none tracking-[-0.04em] text-slate-950 sm:text-6xl;
+  }
+
+  :root:lang(zh-CN) .hero-copy h1 {
+    font-family: 'Audiowide', 'Bricolage Grotesque', 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
   }
 
   .hero-title-ddl {
@@ -99,28 +114,8 @@ a {
     @apply inline-flex w-fit rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-medium text-amber-700;
   }
 
-  .seo-copy-card h2 {
-    @apply m-0 text-lg font-semibold text-slate-950 sm:text-xl;
-  }
-
-  .seo-copy-card p {
-    @apply mb-0 mt-2 max-w-4xl text-sm leading-6 text-slate-600;
-  }
-
   .hero-mobile-tip {
     @apply inline-flex w-fit items-center gap-1.5 rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700;
-  }
-
-  .hero-actions {
-    @apply inline-flex items-center gap-1 self-end rounded-full border border-slate-200 bg-white/90 p-1 shadow-sm backdrop-blur;
-  }
-
-  .hero-icon-button {
-    @apply inline-flex h-9 w-9 items-center justify-center rounded-full border border-transparent bg-transparent text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2;
-  }
-
-  .hero-icon-button.active {
-    @apply border-amber-200 bg-amber-50 text-amber-700;
   }
 
   .top-panel-card {
@@ -721,7 +716,6 @@ a {
 }
 
 :root[data-theme='dark'] .hero-card,
-:root[data-theme='dark'] .seo-copy-card,
 :root[data-theme='dark'] .toolbar-card,
 :root[data-theme='dark'] .control-card,
 :root[data-theme='dark'] .venue-card,
@@ -732,7 +726,6 @@ a {
 }
 
 :root[data-theme='dark'] .hero-copy h1,
-:root[data-theme='dark'] .seo-copy-card h2,
 :root[data-theme='dark'] .top-panel-switch-title,
 :root[data-theme='dark'] .time-zone-time,
 :root[data-theme='dark'] .calendar-title,
@@ -753,7 +746,6 @@ a {
 }
 
 :root[data-theme='dark'] .hero-copy p,
-:root[data-theme='dark'] .seo-copy-card p,
 :root[data-theme='dark'] .time-zone-label,
 :root[data-theme='dark'] .time-zone-date,
 :root[data-theme='dark'] .calendar-note,
@@ -854,24 +846,18 @@ a {
   color: #dbe7f4;
 }
 
-:root[data-theme='dark'] .language-toggle {
+:root[data-theme='dark'] .hero-tools-pill {
   border-color: rgba(71, 85, 105, 0.42);
   background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(17, 24, 39, 0.88));
   box-shadow: 0 14px 30px rgba(2, 6, 23, 0.22);
 }
 
-:root[data-theme='dark'] .hero-actions {
-  border-color: rgba(71, 85, 105, 0.42);
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(17, 24, 39, 0.88));
-  box-shadow: 0 14px 30px rgba(2, 6, 23, 0.22);
-}
-
-:root[data-theme='dark'] .language-toggle-button {
+:root[data-theme='dark'] .hero-tool-button {
   color: #cbd5e1;
 }
 
-:root[data-theme='dark'] .hero-icon-button {
-  color: #cbd5e1;
+:root[data-theme='dark'] .hero-tools-divider {
+  background: rgba(71, 85, 105, 0.5);
 }
 
 :root[data-theme='dark'] .time-zone-badge {
@@ -914,9 +900,9 @@ a {
 :root[data-theme='dark'] .expand-button:hover,
 :root[data-theme='dark'] .favorite-button:hover,
 :root[data-theme='dark'] .action-button:hover,
-:root[data-theme='dark'] .hero-icon-button:hover,
+:root[data-theme='dark'] .hero-tool-button:hover,
 :root[data-theme='dark'] .live-help-trigger:hover,
-:root[data-theme='dark'] .language-toggle-button:hover {
+:root[data-theme='dark'] .hero-tool-button:hover {
   border-color: rgba(100, 116, 139, 0.18);
   background: rgba(30, 41, 59, 0.88);
   color: #f8fafc;
@@ -937,13 +923,7 @@ a {
   color: #111827;
 }
 
-:root[data-theme='dark'] .hero-icon-button.active {
-  border-color: rgba(251, 191, 36, 0.34);
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.9), rgba(245, 158, 11, 0.82));
-  color: #111827;
-}
-
-:root[data-theme='dark'] .language-toggle-button.active {
+:root[data-theme='dark'] .hero-tool-button.active {
   border-color: rgba(251, 191, 36, 0.34);
   background: linear-gradient(135deg, rgba(251, 191, 36, 0.9), rgba(245, 158, 11, 0.82));
   color: #111827;

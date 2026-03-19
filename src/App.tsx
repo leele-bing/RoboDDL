@@ -225,6 +225,10 @@ function App() {
 
   const themeToggleLabel = getThemeToggleLabel(theme, language);
   const githubLabel = text.githubLabel;
+  const nextLanguage = language === 'en' ? 'zh-CN' : 'en';
+  const languageToggleText = nextLanguage === 'en' ? 'EN' : '中文';
+  const languageToggleLabel =
+    language === 'en' ? 'Switch page language to Chinese' : '将页面语言切换为英文';
   const timeZoneCards = [
     {
       id: 'aoe',
@@ -304,43 +308,36 @@ function App() {
           <div className="hero-copy">
             <div className="hero-topbar">
               <h1>Robo<span className="hero-title-ddl">DDL</span></h1>
-              <div className="hero-tools">
-                <div className="language-toggle" role="group" aria-label={text.languageGroupLabel}>
-                  {[
-                    { value: 'en', label: 'EN' },
-                    { value: 'zh-CN', label: '中文' },
-                  ].map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      className={language === option.value ? 'language-toggle-button active' : 'language-toggle-button'}
-                      onClick={() => setLanguage(option.value as Language)}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
-                </div>
-                <div className="hero-actions">
-                  <a
-                    href="https://github.com/RoboDDL/RoboDDL"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hero-icon-button"
-                    aria-label={githubLabel}
-                    title={githubLabel}
-                  >
-                    <Github className="h-4 w-4" />
-                  </a>
-                  <button
-                    type="button"
-                    className="hero-icon-button"
-                    onClick={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))}
-                    aria-label={themeToggleLabel}
-                    title={themeToggleLabel}
-                  >
-                    {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-                  </button>
-                </div>
+              <div className="hero-tools-pill">
+                <button
+                  type="button"
+                  className="hero-tool-button hero-tool-button-language active"
+                  onClick={() => setLanguage(nextLanguage)}
+                  aria-label={languageToggleLabel}
+                  title={languageToggleLabel}
+                >
+                  {languageToggleText}
+                </button>
+                <span className="hero-tools-divider" aria-hidden="true" />
+                <a
+                  href="https://github.com/RoboDDL/RoboDDL"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hero-tool-button hero-tool-button-icon"
+                  aria-label={githubLabel}
+                  title={githubLabel}
+                >
+                  <Github className="h-4 w-4" />
+                </a>
+                <button
+                  type="button"
+                  className="hero-tool-button hero-tool-button-icon"
+                  onClick={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))}
+                  aria-label={themeToggleLabel}
+                  title={themeToggleLabel}
+                >
+                  {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+                </button>
               </div>
             </div>
             <p>{text.heroTagline}</p>
@@ -350,11 +347,6 @@ function App() {
             </div>
             <div className="hero-note">🚧 {text.heroWipNote}</div>
           </div>
-        </section>
-
-        <section className="seo-copy-card" aria-labelledby="search-intent-title">
-          <h2 id="search-intent-title">{text.seoIntro.title}</h2>
-          <p>{text.seoIntro.body}</p>
         </section>
 
         <section className="calendar-card top-panel-card">
