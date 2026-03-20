@@ -308,36 +308,38 @@ function App() {
           <div className="hero-copy">
             <div className="hero-topbar">
               <h1>Robo<span className="hero-title-ddl">DDL</span></h1>
-              <div className="hero-tools-pill">
-                <button
-                  type="button"
-                  className="hero-tool-button hero-tool-button-language active"
-                  onClick={() => setLanguage(nextLanguage)}
-                  aria-label={languageToggleLabel}
-                  title={languageToggleLabel}
-                >
-                  {languageToggleText}
-                </button>
-                <span className="hero-tools-divider" aria-hidden="true" />
-                <a
-                  href="https://github.com/RoboDDL/RoboDDL"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hero-tool-button hero-tool-button-icon"
-                  aria-label={githubLabel}
-                  title={githubLabel}
-                >
-                  <Github className="h-3.5 w-3.5" />
-                </a>
-                <button
-                  type="button"
-                  className="hero-tool-button hero-tool-button-icon"
-                  onClick={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))}
-                  aria-label={themeToggleLabel}
-                  title={themeToggleLabel}
-                >
-                  {theme === 'light' ? <Moon className="h-3.5 w-3.5" /> : <Sun className="h-3.5 w-3.5" />}
-                </button>
+              <div className="hero-tools">
+                <div className="hero-tools-pill">
+                  <button
+                    type="button"
+                    className="hero-tool-button hero-tool-button-language active"
+                    onClick={() => setLanguage(nextLanguage)}
+                    aria-label={languageToggleLabel}
+                    title={languageToggleLabel}
+                  >
+                    {languageToggleText}
+                  </button>
+                  <span className="hero-tools-divider" aria-hidden="true" />
+                  <a
+                    href="https://github.com/RoboDDL/RoboDDL"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hero-tool-button hero-tool-button-icon"
+                    aria-label={githubLabel}
+                    title={githubLabel}
+                  >
+                    <Github className="h-3.5 w-3.5" />
+                  </a>
+                  <button
+                    type="button"
+                    className="hero-tool-button hero-tool-button-icon"
+                    onClick={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))}
+                    aria-label={themeToggleLabel}
+                    title={themeToggleLabel}
+                  >
+                    {theme === 'light' ? <Moon className="h-3.5 w-3.5" /> : <Sun className="h-3.5 w-3.5" />}
+                  </button>
+                </div>
               </div>
             </div>
             <p>{text.heroTagline}</p>

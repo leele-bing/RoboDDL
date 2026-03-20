@@ -56,15 +56,15 @@ a {
   }
 
   .hero-topbar {
-    @apply flex items-start justify-between gap-4;
+    @apply flex flex-wrap items-start justify-between gap-3 sm:gap-4;
   }
 
   .hero-tools {
-    @apply relative flex flex-shrink-0 items-center gap-2 self-start;
+    @apply relative flex w-fit max-w-full flex-shrink-0 items-center gap-2 self-start;
   }
 
   .hero-tools-pill {
-    @apply inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 p-2 shadow-sm backdrop-blur;
+    @apply inline-flex flex-shrink-0 items-center gap-2 rounded-full border border-slate-200 bg-white/90 p-2 shadow-sm backdrop-blur;
   }
 
   .hero-tool-button {
@@ -1030,6 +1030,10 @@ a {
 }
 
 @media (max-width: 767px) {
+  .hero-topbar {
+    @apply flex-col items-start;
+  }
+
   .hero-copy h1 {
     font-size: 2.5rem;
   }
